@@ -1,0 +1,121 @@
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+
+    <title>Superhero comics recommendations</title>
+
+    <style>
+
+    /*some embelishments in css like font, color and background image*/
+    /*setting up style for the pre element */
+    html, pre {
+      width: 500px;
+
+      /*fonts used should be pre-installed in all macs, not sure about PCs tho*/
+
+      font-family: "Avenir";
+
+      /*i don't know why the margin shifted more to the right, to look into*/
+      margin: auto;
+    }
+    body {
+      width: 700px;
+      margin: auto;
+      /*background image is a recongnizably comics-y pop art thing
+      image is located in the same root folder as all other elements – in the future will use inner "images" folder*/
+      background-image: url("bang.jpg" );
+
+
+    }
+    h1{
+      font-size: 55px;
+      font-family: "Birch Std";
+      color: white;
+
+    }
+
+    /*a h2 to sort of explain what the website is about*/
+    h2{
+      font-family: sans-serif;
+      font-family: "Avenir";
+      color: white;
+
+    }
+    pre {
+
+      line-height: 1.5;
+      letter-spacing: 0.05rem;
+      padding: 1rem;
+      background-color: #33ccff;
+    }
+
+    label {
+      width: 150px;
+      margin-right: 0px;
+      color: white;
+    }
+    select {
+      width: 150px;
+      padding: 3px;
+    }
+  </style>
+
+    </head>
+
+    <body>
+      <h1>Superhero comics rec list!</h1>
+      <h2>Some nice comics to start with...</h2>
+
+      <form>
+        <label for="hero-choose">... if you're a fan of:</label>
+        <select id="hero-choose" name="hero-choose">
+          <option>IronMan</option>
+          <option>WonderWoman</option>
+          <option>Daredevil</option>
+          
+        </select>
+      </form>
+
+      <!-- this is were the txt files will show up -->
+      <pre>
+
+      </pre>
+
+      <script>
+
+
+  var heroChoose = document.querySelector('select');
+  var heroDisplay = document.querySelector('pre');
+
+      heroChoose.onchange = function() {
+        var hero = heroChoose.value;
+        updateDisplay(hero);
+      };   
+
+      function updateDisplay(hero) {
+        hero = hero.replace(" ", "");
+        //switching all letters to lowercase and adding txt to find the text files
+        hero = hero.toLowerCase();
+        var url = hero + '.txt';
+        console.log(url)
+              // functon(response) as parameter
+              fetch(url).then(function(response) {
+                // fetchnig raw text
+                response.text().then(function(text) {
+                  heroDisplay.textContent = text;
+                  // checking here
+                  console.log(text);
+            });
+              }); 
+
+            };
+      // upon loading the website will show Iron Man rec list
+      updateDisplay('IronMan');
+      heroChoose.value = 'IronMan';  
+
+    </script>
+  </body>
+  </html>
